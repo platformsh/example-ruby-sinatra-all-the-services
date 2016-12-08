@@ -1,0 +1,13 @@
+source 'https://rubygems.org'
+
+gem 'unicorn'
+gem 'platform_sh'
+gem 'sinatra'
+gem 'mysql2'
+gem 'redis'
+gem 'elasticsearch'
+gem 'sunspot'
+gem 'bunny'
+gem 'mongo'
+gem 'pg'
+gem 'activerecord'

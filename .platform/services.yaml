@@ -1,0 +1,20 @@
+elasticsearch:
+  type: elasticsearch
+  disk: 256
+mysql:
+  type: mysql:10.0
+  disk: 256
+postgresql:
+  type: postgresql:9.3
+  disk: 256
+mongodb:
+  type: mongodb:3.0
+  disk: 500
+redis:
+  type: redis:3.0
+solr:
+  type: solr:4.10
+  disk: 256
+rabbitmq:
+  type: rabbitmq:3.5
+  disk: 256
