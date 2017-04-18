@@ -16,26 +16,32 @@ class Main < Sinatra::Base
 
   get '/' do
     begin
-      message =""
+      message ="#{RUBY_VERSION}<br>"
       redis = Redis.new
       redis.set("mykey", "hello world")
       redis.get("mykey")
       message+= "Redis Succesful<br>"
-      
+      begin
+        redis.client
+      message+= "Redis Client Command successful<br>"
+      rescue Exception => e
+         message+= e.message
+      # => Timed out connecting to Redis on 10.0.1.1:6380
+      end      
       session = Sunspot::Session.new
       session.config.solr.url=ENV['SOLR_URL'] #rsolr not taking in url
       session.commit
-      message+= "Solr Succesful<br>"
+      message+= "Solr successful<br>"
 
       client = Elasticsearch::Client.new log: true
       client.cluster.health
       client.search q: 'test'
-      message+= "Elasticsearch Succesful<br>"
+      message+= "Elasticsearch successful<br>"
       
       client = Mongo::Client.new(ENV['MONGODB_URL']) #mongodb not taking in url
       db = client.database
       db.collection_names
-      message+= "Mongo Succesful<br>"
+      message+= "Mongo successful<br>"
       
       conn = Bunny.new
       conn.start
@@ -44,7 +50,7 @@ class Main < Sinatra::Base
       q.publish("Hello, everybody!")
       delivery_info, metadata, payload = q.pop
 
-      message+=  "RabbitMQ succesful<br>"
+      message+=  "RabbitMQ successful<br>"
       conn.stop
     rescue Exception => e  
       message+= e.message  
