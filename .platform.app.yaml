@@ -23,9 +23,7 @@ relationships:
     rabbitmq: "rabbitmq:rabbitmq"
     elasticsearch: "elasticsearch:elasticsearch"
 disk: 2048
-dependencies:
-  ruby:
-    foreman: '*'
+
 hooks:
   build: |
     ruby -e 'puts RUBY_VERSION'
