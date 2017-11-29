@@ -18,3 +18,10 @@ solr:
 rabbitmq:
   type: rabbitmq:3.5
   disk: 256
+pagespeed:
+    type: pagespeed:1.12-rc
+    configuration:
+        endpoints:
+            app: {}
+    relationships:
+        app: "myrubyapp:ruby"
