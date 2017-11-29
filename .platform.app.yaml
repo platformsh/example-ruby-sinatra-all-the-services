@@ -31,3 +31,4 @@ hooks:
 
 mounts:
    "/public": "shared:files/files"
+#redep
