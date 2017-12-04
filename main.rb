@@ -19,34 +19,51 @@ class Main < Sinatra::Base
     content_type :json
     begin
       status = 1
-      message ="#{RUBY_VERSION}<br>"
+      message ="#{RUBY_VERSION}"
       redis = Redis.new
       redis.set("mykey", "hello world")
       redis.get("mykey")
-      message+= "Redis Succesful<br>"
+      message+= "Redis Succesful"
       begin
         redis.client :getname
-        message+= "Redis Client Command successful<br>"
+        message+= "Redis Client Command successful"
       rescue Exception => e
         status = 0
-        message+="#{e.message}<br>"
-        message+="#{e.backtrace.inspect}<br>"
+        message+="#{e.message}"
+        message+="#{e.backtrace.inspect}"
         # => Timed out connecting to Redis on 10.0.1.1:6380
       end
       session = Sunspot::Session.new
       session.config.solr.url=ENV['SOLR_URL'] #rsolr not taking in url
       session.commit
-      message+= "Solr successful<br>"
+      message+= "Solr successful"
+      
+      influxdb = InfluxDB::Client.new ENV['INFLUXDB_URL']
+
+      # Enumerator that emits a sine wave
+      Value = (0..360).to_a.map {|i| Math.send(:sin, i / 10.0) * 10 }.each
+
+      loop do
+        data = {
+          values: { value: Value.next },
+          tags:   { wave: 'sine' } # tags are optional
+        }
+
+        influxdb.write_point(name, data)
+
+        sleep 1
+      end
+      message+= "InfluxDB successful"
 
       client = Elasticsearch::Client.new log: true
       client.cluster.health
       client.search q: 'test'
-      message+= "Elasticsearch successful<br>"
+      message+= "Elasticsearch successful"
       
       client = Mongo::Client.new(ENV['MONGODB_URL']) #mongodb not taking in url
       db = client.database
       db.collection_names
-      message+= "Mongo successful<br>"
+      message+= "Mongo successful"
       
       conn = Bunny.new
       conn.start
@@ -55,11 +72,11 @@ class Main < Sinatra::Base
       q.publish("Hello, everybody!")
       delivery_info, metadata, payload = q.pop
 
-      message+=  "RabbitMQ successful<br>"
+      message+=  "RabbitMQ successful"
       conn.stop
     rescue Exception => e
       status = 0
-      message+="#{e.message}<br>"
+      message+="#{e.message}"
       message+= e.backtrace.inspect
     end
     {status: 1, message: message}.to_json

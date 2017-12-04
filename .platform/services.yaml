@@ -11,7 +11,7 @@ mongodb:
   type: mongodb:3.0
   disk: 500
 redis:
-  type: redis:3.0
+  type: redis:3.2-rc
 solr:
   type: solr:4.10
   disk: 256
