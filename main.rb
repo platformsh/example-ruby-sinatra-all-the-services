@@ -7,6 +7,7 @@ require 'mongo'
 require 'bunny'
 require 'platform_sh'
 require 'json'
+require "influxdb"
 
 class Main < Sinatra::Base
   configure do
