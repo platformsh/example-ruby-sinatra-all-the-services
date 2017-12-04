@@ -1,5 +1,4 @@
 "https://{default}/":
     type: upstream
-    upstream: "pagespeed:http-app"
-    cache:
-        enabled: false
+    # the first part should be your project name
+    upstream: "myrubyapp:http"
