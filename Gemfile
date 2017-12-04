@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 gem 'unicorn'
-gem 'platform_sh', '0.2.6'
+gem 'platform_sh'
 gem 'sinatra'
 gem 'mysql2'
 gem 'redis'
