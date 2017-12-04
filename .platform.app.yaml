@@ -22,6 +22,7 @@ relationships:
     solr: "solr:solr"
     rabbitmq: "rabbitmq:rabbitmq"
     elasticsearch: "elasticsearch:elasticsearch"
+    influxdb: "influxdb:influxdb"
 disk: 2048
 
 hooks:
