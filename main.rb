@@ -40,10 +40,10 @@ class Main < Sinatra::Base
       message+= "Solr successful"
 
       name     = 'foobar'      
-      influxdb = InfluxDB::Client.new ENV['INFLUXDB_URL']
+      influxdb = InfluxDB::Client.new url: ENV['INFLUXDB_URL']
 
       # Enumerator that emits a sine wave
-      Value = (0..360).to_a.map {|i| Math.send(:sin, i / 10.0) * 10 }.each
+      Value = (0..10).to_a.map {|i| Math.send(:sin, i / 10.0) * 10 }.each
 
       loop do
         data = {
