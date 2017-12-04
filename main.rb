@@ -38,7 +38,8 @@ class Main < Sinatra::Base
       session.config.solr.url=ENV['SOLR_URL'] #rsolr not taking in url
       session.commit
       message+= "Solr successful"
-      
+
+      name     = 'foobar'      
       influxdb = InfluxDB::Client.new ENV['INFLUXDB_URL']
 
       # Enumerator that emits a sine wave
