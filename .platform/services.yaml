@@ -19,5 +19,5 @@ rabbitmq:
   type: rabbitmq:3.5
   disk: 256
 influxdb:
-  type: influxdb:1.3
+  type: influxdb:1.2
   disk: 256
