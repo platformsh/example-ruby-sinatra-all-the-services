@@ -1,5 +1,5 @@
 name: myrubyapp
-type: "ruby:2.4-rc"
+type: "ruby:2.5-rc"
 
 web:
     upstream:
