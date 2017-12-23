@@ -44,29 +44,32 @@ class Main < Sinatra::Base
 
       username = 'foobar'
       password = 'pwd'
+      begin
 
-
-      influxdb = InfluxDB::Client.new url: ENV['INFLUXDB_URL']
-      influxdb.create_cluster_admin(username, password)
-      influxdb.config.username = username
-      influxdb.config.password = password
-      influxdb.create_database(database)
-      influxdb.config.database = database
+        influxdb = InfluxDB::Client.new url: ENV['INFLUXDB_URL']
+        influxdb.create_cluster_admin(username, password)
+        influxdb.config.username = username
+        influxdb.config.password = password
+        influxdb.create_database(database)
+        influxdb.config.database = database
       
-      # Enumerator that emits a sine wave
-      Value = (0..10).to_a.map {|i| Math.send(:sin, i / 10.0) * 10 }.each
+        # Enumerator that emits a sine wave
+        Value = (0..10).to_a.map {|i| Math.send(:sin, i / 10.0) * 10 }.each
 
-      loop do
-        data = {
-          values: { value: Value.next },
-          tags:   { wave: 'sine' } # tags are optional
-        }
+        loop do
+          data = {
+            values: { value: Value.next },
+            tags:   { wave: 'sine' } # tags are optional
+          }
 
-        influxdb.write_point(name, data)
+          influxdb.write_point(name, data)
 
-        sleep 1
+          sleep 1
+        end
+        message+= "InfluxDB successful"
+      rescue
+        message+= "InfluxDB Not implemented"
       end
-      message+= "InfluxDB successful"
 
       client = Elasticsearch::Client.new log: true
       client.cluster.health
