@@ -22,7 +22,7 @@ class Main < Sinatra::Base
       redis.get("mykey")
       message+= "Redis Succesful<br>"
       begin
-        redis.client
+        redis._client
       message+= "Redis Client Command successful<br>"
       rescue Exception => e
          message+= e.message
